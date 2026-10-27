@@ -122,23 +122,24 @@ int main() {
 
     while (running) {
         std::cout << std::endl;
-
         std::cout << "1. Файл бригады" << std::endl;
         std::cout << "2. Ввод имени файла" << std::endl;
         std::cout << "3. Выход" << std::endl;
-
+        std::cout << std::endl;
         std::cin >> choice;
         std::cin.ignore(32767, '\n');
 
         switch (choice) {
         case 1: {
             std::string filename1 = "ethers05.bin";
+            std::cout << std::endl;
             std::cout << "Имя файла: ethers05.bin" << std::endl;
             process_file(filename1);
             break;
         }
         case 2: {
             std::string filename2;
+            std::cout << std::endl;
             std::cout << "Введите имя .bin файла: " << std::endl;
             std::getline(std::cin, filename2);
             process_file(filename2);
