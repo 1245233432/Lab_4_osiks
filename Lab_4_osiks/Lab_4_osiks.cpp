@@ -1,19 +1,18 @@
 ﻿#include <iostream>
 #include <string>
 #include <windows.h>
-#include <filesystem>
 #include <vector>
 #include <fstream>
 #include <iomanip>
 
-void process_file(std::string& filename) {
+void process_file(const std::string& filename) {
     std::ifstream file(filename, std::ios::binary);
     if (!file) {
         std::cerr << "Не удалось открыть файл." << std::endl;
         return;
     }
 
-    char header[14];
+    char header[14]; // хранение заголовка фрейма ethernet
     file.read(header, 14);
 
     int count_ipv4 = 0, count_arp = 0, count_eth_dix = 0, count_eth_snap = 0, count_novell_802_2 = 0, count_novell_802_3 = 0;
