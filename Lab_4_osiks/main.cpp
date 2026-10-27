@@ -16,7 +16,7 @@ void process_file(const std::string& filename) {
     file.read(header, 14);
 
     int count_ipv4 = 0, count_arp = 0, count_eth_dix = 0, count_eth_snap = 0, count_novell_802_2 = 0, count_novell_802_3 = 0;
-    for (int i = 1; file && !file.eof(); i++, file.read(header, 14)) {
+    for (int i = 1; file && !file.eof(); i++, file.read(header, 14)) { // цикл на все фреймы файла
         int size = 14;
 
         std::cout << "‘рейм #" << std::dec << i << std::endl;
@@ -26,7 +26,7 @@ void process_file(const std::string& filename) {
             std::cout << std::hex << std::setw(2) << std::setfill('0') << (0xFF & static_cast<unsigned int>(header[j]));
             if (j != 5) std::cout << ":";
         }
-        std::cout << " <= ";
+        std::cout << " => ";
         for (int j = 0; j < 6; j++) {
             std::cout << std::hex << std::setw(2) << std::setfill('0') << (0xFF & static_cast<unsigned int>(header[6 + j]));
             if (j != 5) std::cout << ":";
@@ -34,7 +34,7 @@ void process_file(const std::string& filename) {
         std::cout << std::endl;
 
         unsigned short type = ((0xFF & header[12]) << 8) | (0xFF & header[13]);
-        if (type > 0x0600) {
+        if (type > 0x05DC) {
             if (type == 0x800) {
                 std::cout << "  “ип: IPv4" << std::endl;
 
@@ -68,8 +68,6 @@ void process_file(const std::string& filename) {
             }
             else {
                 std::cout << "  “ип: Ethernet DIX (Ethernet II)" << std::endl;
-                // длина полезной нагрузки неизвестна (поле Type, а не Length) Ч
-                // дополнительный seek не выполн€ем, чтобы не уйти в рассинхрон
                 count_eth_dix++;
             }
         }
